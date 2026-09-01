@@ -1,0 +1,24 @@
+scala> import spark.implicits._
+
+scala> val simpleData = Seq((“James”, “Sales”, 3000),
+| (“Michael”, “Sales”, 4600),
+| (“Robert”, “Sales”, 4100),
+| (“Maria”, “Finance”, 3000),
+| (“James”, “Sales”, 3000),
+| (“Scott”, “Finance”, 3300),
+| (“Jen”, “Finance”, 3900),
+| (“Jeff”, “Marketing”, 2000),
+| (“Kumar”, “Marketing”, 2000),
+| (“Sarif”, “Sales”, 4100)
+| )
+scala> val df = simpleData.toDF(“employee.name”, “department”, “salary”)
+scala> df.show()
+scala> df.select(kurtosis(“salary”)).show(false)
+scala> df.select(max(“salary”)).show(false)
+scala> df.select(min(“salary”)).show(false)
+scala> df.select(mean(“salary”)).show(false)
+scala> df.select(skewness(“salary”)).show(false)
+scala> df.select(stddev(“salary”), stddev_samp(“salary”), stddev_pop(“salary”)).show(false)
+scala> df.select(sum(“salary”)).show(false)
+scala> df.select(sumDistinct(“salary”)).show(false)
+scala> df.select(variance(“salary”), var_samp(“salary”), var_pop(“salary”)).show(false)
