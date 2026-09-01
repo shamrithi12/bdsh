@@ -1,0 +1,38 @@
+hive>create table airport(a_id string,name string,country string,IATA_FAA string,ICAO
+string,latitude string,longitude string,altitude string,time_zone string,DST string,TZ
+string) row format delimited fields terminated by ',' stored as textfile;
+hive>create table Airlines(airline string,name string,alias string,IATA string,ICAO
+string,callsign string,country string,active string) row format delimited fieldsterminated
+by ',' stored as textfile;
+hive>create table Route(airlines string,airline_id string,source_airport string,source_airport_id
+string,destination_airport string,destination_airport_id string,code_share string,stops
+string,equipments string) row format delimited fields terminated by ',' stored as textfile;
+hive>load data local inpath '/home/grg/Airport1.txt' overwrite into table airport;
+hive>load data local inpath '/home/grg/airlines1.txt' overwrite into table Airlines;
+hive>load data local inpath '/home/grg/routes1.txt' overwrite into table Route;
+hive>select * from airport limit 3;
+hive>select * from Route where stops='0';
+
+INPUT FILE:
+Airport.txt
+01,alaskaAirport,alaska,America,ALT,ALTO,67.2,57.4,67,7.2,N,america.zone
+02,trichy Airport,Madurai,India,BLR,BLRO,54.3,32.7,78,4.5,M,india.zone
+03,coimbatoreAirport,coimbatore,India,RST,RSTO,67.3,27.1,67,6.7,C,india.zone
+04,bruges,flemish,Europe,ELT,ELTO,92.2,67.2,89,6.1,L,europe.zone
+05,madurai Airport,Salem,India,BEP,BEPO,56.2,25.1,26,5.5,I,india.zone
+
+Airlines.txt
+01,Indigo,BA,ELT,ELTO,cactus,Europe,N
+02,AirIndia,JA,BLR,BLRO,redwood,India,N
+
+76
+03,spicejet,IA,BEP,BEPO,citrus,India,N
+04,DeccanAirlines,EA,RST,RSTO,jazz,India,Y
+05,Air Asia,AI,ALT,ALTO,dragon,America,N
+
+Route.txt
+ALT,24,ALTO,GORT,TORY,311,N,0,TUR
+BLT,25,BLTO,HORT,ROTY,378,N,3,GUT
+BEP,21,BEPO, ALTO,BFGF,415,N,0,TUV
+RST,22,RSTO,THET,RETO,456,N,1,VUT
+BLR,23,BLRO,FACO,DOCT,430,Y,0,YUT
