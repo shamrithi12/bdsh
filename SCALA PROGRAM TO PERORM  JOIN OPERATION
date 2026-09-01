@@ -1,0 +1,30 @@
+scala> val movies-Seq( 
+| ("1","dev","12","8"), 
+| ("2","kgf","16","9"), 
+| ("3","comali","22","7"), 
+| ("4","lisa","24","8"), 
+| ("5","coco","30","6"), 
+| ("6","june","25","7")). toDF("id","title","release_date","ratings") 
+scala> movies. show() 
+scala> val genres=Seq( 
+Inner join: 
+| ("1","romantic"), 
+| ("2","action"), 
+| ("3","comedy"), 
+| ("4","horror"), 
+| ("5","comedy"), 
+| ("6","comedy")).toDF("id","genre") 
+scala> val moviesgenres Inner-movies.join(genres,movies("id")===genres("id"),"inner").show() 
+Cross join 
+Scala val moviesgenresCross-movies.join(genres).show() 
+Left outer join: 
+scala> val moviesgenresLeft=movies.join(genres,movies("id")===genres("id"),"leftouter").show() 
+Right outer join: 
+scala> valmoviesgenresRight-movies.join(genres,movies("id")===genres("id"),"rightouter").show() 
+Full join: 
+scala> val moviesgenresFull-movies.join(genres,movies("id")===genres("id"),"fullouter").show() 
+8 
+Left semi join: 
+scala> vamoviesgenresLeftSemi-movies.join(genres,movies("id"); =genres("id"),"leftsemi").show() 
+Left anti join: 
+scala> valmoviesgenresLeftAnti-movies.join(genres,movies("id"); genres("id"),"leftanti").show() 
