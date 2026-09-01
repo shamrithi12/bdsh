@@ -1,0 +1,19 @@
+a) Reading input files u.data and u.item
+scala>val ipRDD = sc.textFile("/home/grg/Downloads/u.data.txt")
+scala>val ipRDD1 = sc.textFile("/home/grg/Downloads/u.item.txt")
+b) Extract the necessary information from each RDD
+scala>val mviDRDD = ipRDD.map(line => (line.split("\t")(1), line.split("\t")(2)))
+scala>val mvNameDRDD = ipRDD1.map(line=>(line.split("\\|")(0),line.split("\\|")(1)))
+c) Get the five star movies
+scala>val FivestarMV= mviDRDD.filter(m=>m._2=="5")
+scala>val pairRDD = FivestarMV.map(t=>(t,1))
+scala>val fivestartotal = pairRDD.reduceByKey((x,y)=>x+y)
+scala>fivestartotal.take(10).foreach(println)
+d) Count the number of five star movies
+scala>val movieRDD = fivestartotal.sortBy(-_._2)
+scala>val MovieID = movieRDD.map(x=>(x._1._1,x._2))
+scala>MovieID.count()
+e) Join movie name and rating RDDs
+scala>val joinRDD =MovieID.join(mvNameDRDD)
+scala>val resultrdd = joinRDD.sortBy(_._2._1).map(m=>m._1+"->"+m._2._2)
+scala>resultrdd.take(10).foreach(println)
