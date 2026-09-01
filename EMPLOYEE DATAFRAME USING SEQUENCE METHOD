@@ -1,0 +1,33 @@
+scala> val empColumns = Seq("emp_id","name","year_of_exp","dept","address","salary")
+scala> val emp = Seq((1,"renu",4,"Sales","Chennai",50000),
+| (2,"banu",5,"Production","cbe",60000),
+| (3,"meenu",3,"Production","Madurai",45000),
+| (4,"charu",2,"Marketing","Salem",35000),
+| (5,"thanu",6,"Production","Trichy",75000),
+| (6,"riya",2,"Sales","Karur",30000))
+
+scala> import spark.sqlContext.implicits._
+scala> val empDF = emp.toDF(empColumns:_*)
+scala> empDF.show()
+a) Select employee name where department=”Production”
+scala> val df1=empDF.select($"name").filter($"dept"==="Production").show()
+b) Adding “DOJ” Column and Remove Column “address”
+scala> val dojDates = Seq("2023-01-15", "2022-12-10", "2023-03-05", "2023-02-20", "2022-11-30",
+"2023-04-25", "2022-10-15")
+scala> val empDFWithDOJ = empDF
+scala>.withColumn("row_id", monotonically_increasing_id())
+scala>.join(dojDates.zipWithIndex.toDF("DOJ", "row_id"), "row_id")
+scala>.drop("row_id")
+scala>.show()
+scala> val dfafterremove=empDF.drop("Address").show()
+
+48
+c) Renaming column department as “Dept Name”
+scala> empDF.withColumnRenamed("dept","Dept Name").show()
+d) Filter rows where salary is > 50000
+scala> empDF.filter($"salary">50000).show()
+e) Print the unique names of the department.
+scala> empDF.select("dept").distinct().show()
+f) Update the values of “salary” column by 1000 and Remove Column “address”
+scala> val df2=empDF.withColumn("salary",col("salary")+1000).show()
+scala> val dfafterremove=empDF.drop("address").show()
