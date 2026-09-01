@@ -1,0 +1,30 @@
+scala> import org.apache.spark.sql.functions._
+scala> import spark.implicits._
+scala> val data = seq(“Diane Murphy”,”Accounting”,8435), (“Mary”,”Acc”,9998),
+(“Jeff”,”Acc”,8992), (“Willian”,”Acc”,8870), (“Gerard”,”Acc”,11472), (“Bow”,”Acc”,6627), (“Leslie
+Jen”,”IT”,8113), (“Leslie Thompson”,”IT”,5186), (“Julie”,”Sales”,9181), (“Steve”,”Sales”,9441),
+(“FoonYue”,”Sales”,6660),(“George”,”Sales”,10563),(“Loui”,”SCM”,10449),(“Gerand’,”SRM”,6949),
+(“Pamela”,”SCM”,11503),(“Larry Bott”,”SCM”,11798),(“Barry Jones”,”SCM”10586)).
+scala>val df = data.toDF(“Name”,”Dept”,”Salary”)
+scala> df.show()
+a) Sum
+1. Total sum of the salary
+scala> df.agg(sum(“salary”).alias(“Total_salary”).show()
+2. Sum of the particular dep salary
+scala> df.groupby(“department”).sum(“salary’).show()
+b) Min and Max
+1. Min and Max for whole dataset
+scala> df.agg(min(“salary”).alias(“min_salary”),|max(“salary’).alias(“max_sales”)).show()
+2. Min and Max for the particular department
+scala>df.groupBy(“department”).agg(min(“salary”).|as(“min_salary”),max(“salary”).as(“max_salary”)).
+|show()
+c) Average
+1. Total Average
+scala> df.agg(avg(“salary”).alias(‘average_salary”)).show()
+2. Average for the particular department
+scala> df.groupBy(“department”).avg(“salary’).show()
+d) Count
+1. Total count
+scala> df.agg(count(“name”).alias(“employee_count”)).show()
+2. Count the department
+scala> df.groupBy(“department’).count().show()
