@@ -1,0 +1,17 @@
+hive>create table customer027(userid string, name string,status string, country string,amount
+string) row format delimited fields terminated by ',' stored as textfile;
+hive>load data local inpath '/home/user/customer003.txt' into table customer027;
+hive>select * from customer027;
+hive>create view customerview028 asselect * from customer027 where amount>20000;
+hive>select * from customerview028;
+hive>CREATE INDEX index10 ON TABLE customer027(userid) as
+'org.apache.hadoop.hive.ql.index.compact.CompactIndexHandler' WITH DEFERRED REBUILD;
+hive>show index10 on customer027;
+hive>create table customerpart025 (userid string, name string, statusstring) partitioned by
+(country string) row format delimited fields terminated by ',';
+hive>show partitions customerpart025;
+hive>INSERT OVERWRITE TABLE customerpart025 PARTITION(country) SELECT
+userid,name,status,country from customer027;
+hive>create view partitionview023 asselect * from customer027 where country='us';
+hive>select * from partitionview023;
+hive>Describe customerpart025;
