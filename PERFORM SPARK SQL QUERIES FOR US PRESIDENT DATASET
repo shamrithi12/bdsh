@@ -1,0 +1,34 @@
+scala> val df_pres = spark.read.format("csv").option("header", "true").option("inferSchema",
+"true").load("D:\uspresi.csv")
+scala>df_pres.select($"pres_id",$"pres_dob",$"pres_bs").sort($"pes_bs".asc).show()
+
+a. Show all columns from DataFrame
+scala> df_pres.show()
+
+b. Show specific columns from DataFrame
+scala> df_pres.select($"pres_id",$"pres_dob",$"pres_bs").show()
+
+c. Query with Alias
+scala>df_pres.alias("Presidenttable").select($"pres_id",$"pres_dob".alias
+("Date Of Birth"),$"pres_bs").show()
+
+d. Fetch all the presidents who were born in New York
+scala>df_pres.filter($"pres_bs"==="New York").select($"pres_name",$"pr
+es_dob".alias(" Date Of Birth"),$"pres_bs").show()
+
+e. Specify multiple conditions in filter using OR (||)
+scala>df_pres.filter($"pres_bs"==="NewYork"||$"pres_bs"==="Ohio").select($"p
+res_name",$"pres_dob".alias("DateOfBirth"),$"pres_bs").show()
+
+f. Multiple conditions in Filter using AND (&&)
+scala> df_pres.filter($"pres_bs"==="New York" && $"pres_dob"> "1850-01-
+01").select($"pres_name",$"pres_dob".alias("Date OfBirth"),$"pres_bs").show()
+
+40
+
+g. Fetch the names LIKE “James” and NOT LIKE “James”
+scala>df_pres.filter($"pres_name".like("James%")).select($"pres_name",$"pres_dob").show()
+scala>df_pres.filter(!$"pres_name".like("James%")).select($"pres_name",$"pres_dob",$
+"pres_bs").show()
+h. Orderby
+scala>df_pres.select($"pres_id",$"pres_dob",$"pres_bs").sort($"pres_bs".asc).show()
