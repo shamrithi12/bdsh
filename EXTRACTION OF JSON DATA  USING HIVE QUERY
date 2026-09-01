@@ -1,0 +1,12 @@
+hive>create table employee(str string);
+hive>load data local inpath '/home/user/emp.json' overwrite into table employee;
+hive>select get_json_object(str,'$.id')as eid,get_json_object(str,'$.name')as
+ename,get_json_object(str,'$.designation')as edesignation,get_json_object(str,'$.salary')as
+esalary,get_json_object(str,'$.city')as city from employee;
+INPUT FILE:
+Emp.txt
+{ "id":"101","name":"Sreemathi" ,"designation":"sales" ,"salary":"45000","city":"Erode"}
+{ "id":"102","name":"Sindhu","designation":"Analyst","salary":"70000","city":"Salem"}
+{ "id":"103","name":"Arun","designation":"Manager","salary":"35000","city":"Trichy"}
+{ "id":"104","name":"Deepak","designation":"Enginer","salary":"80000","city":"Kovai"}
+{ "id":"105","name":"Sakthi" ,"designation":"Clerk" ,"salary":"22000","city":"Trichy"}
