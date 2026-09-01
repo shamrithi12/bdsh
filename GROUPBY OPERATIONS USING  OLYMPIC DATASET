@@ -1,0 +1,15 @@
+val 
+val df2 = spark.read.options(Map("inferSchema"->"true","delimiter"->",","header"- 
+>"true")).csv("D:/DA LAB III DATASETS/SPARK AND HIVE DATASETS/summer 
+olympic medals.csv") 
+a. Find the total number of gold & silver medals won by each country code 
+scala >.df2.filter($"Medal"==="Silver"||$"Medal"=="Gold").groupBy($"Country").count() 
+.show() 
+b. Find the number of medals won by each country every year 
+scala> df2.groupBy($"Country",$"Medal",$"Year").count().show() 
+c. Find the total number of medals won by each country displayed based on gender 
+scala> df2.groupBy($"Country",$"Medal",$"Gender").count().show() 
+d. Find the total number of medals won by each country displayed based on gender 
+(Women). 
+scala> df2.filter($"Gender"- 
+="Women").groupBy($"Country",$"Medal").count().show() 
