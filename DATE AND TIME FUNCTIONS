@@ -1,0 +1,75 @@
+a) RETRIEVE THE CURRENT DATE
+scala> import org.apache.spark.sql.functions._
+scala> val df = Seq((1)).toDF("seq")
+scala> val curDate = df.withColumn("current_date",current_date().as("current_date"))
+scala> .withColumn("current_timestamp",current_timestamp().as("current_timestamp"))
+scala> curDate.show(false)
+
+b) TO GET THE INPUT DATE, CURRENT DATE AND THE DIFFERENCE IN DAYS
+BETWEEN THEM
+scala> import org.apache.spark.sql.functions._
+scala> Seq(("2019-01-23"),("2019-06-24"),("2019-09-20"))
+scala> .toDF("input")
+scala> .select( col("input"), current_date(),
+| datediff(current_date(),col("input")).as("diff")
+| ).show()
+c) TO GET THE INPUT DATE, CURRENT DATE AND THE DIFFERENT IN DAYS AND
+ALSO MONTHS BETWEEN THEM
+scala> import org.apache.spark.sql.functions._
+scala> Seq(("2019-01-23"),("2019-06-24"),("2019-09-20"))
+scala> .toDF("date")
+scala> .select( col("date"), current_date(),
+| datediff(current_date(),col("date")).as("datediff"),
+| months_between(current_date(),col("date")).as("months_between")
+| ).show()
+
+18
+d) CURRENT DATE AND TIME FORMAT
+scala> import org.apache.spark.sql.functions._
+scala> Seq(("2019-01-23"))
+scala> .toDF("Input")
+scala> .select(
+| current_date()as("current_date"),
+| col("Input"),
+| date_format(col("Input"), "MM-dd-yyyy").as("format")
+| ).show()
+e) CURRENT TIMESTAMP
+scala> import org.apache.spark.sql.functions._
+scala> val df = Seq((1)).toDF("seq")
+scala> val curDate = df.withColumn("current_date",current_date().as("current_date"))
+scala> val curTime =
+df.withColumn("current_timestamp",current_timestamp().as("current_timestamp"))
+scala> curTime.show()
+f) TRUNCATE OF MONTHS AND YEARS
+scala> import org.apache.spark.sql.functions._
+scala> Seq(("2019-01-23"),("2019-06-24"),("2019-09-20"))
+scala> .toDF("input")
+scala>.select( col("input"),
+| trunc(col("input"),"Month").as("Month_Trunc"),
+| trunc(col("input"),"Year").as("Month_Year"),
+| trunc(col("input"),"Month").as("Month_Trunc")
+| ).show()
+
+3
+
+19
+g) ADDING, SUBTRACTING DATES AND MONTHS
+scala>.select( col("input"),
+| add_months(col("input"),3).as("add_months"),
+| add_months(col("input"),-3).as("sub_months"),
+| date_add(col("input"),4).as("date_add"),
+| date_sub(col("input"),4).as("date_sub")
+| ).show()
+h) DAY OF THE WEEK(), DAY OF THE MONTH (), DAY OF THE YEAR ( ), NEXT DAY( ),
+WEEK OF THE YEAR( )
+scala> import org.apache.spark.sql.functions._
+scala> Seq(("2019-01-23"),("2019-06-24"),("2019-09-20"))
+scala> .toDF("input")
+scala> .select( col("input"), year(col("input")).as("year"),
+| month(col("input")).as("month"),
+| dayofweek(col("input")).as("dayofweek"),
+| dayofmonth(col("input")).as("dayofmonth"),
+| dayofyear(col("input")).as("dayofyear"),
+| next_day(col("input"),"Sunday").as("next_day"),
+| weekofyear(col("input")).as("weekofyear")
+| ).show()
