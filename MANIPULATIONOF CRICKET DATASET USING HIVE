@@ -1,0 +1,18 @@
+Cricket.txt
+1, rahul,2017,90
+2, raina,2019,98
+3, virat,2018,99
+4, bravo,2017,93
+5, rayudu,2016,89
+6, dhoni,2018,90
+7, sachin,2019,48
+8, yadav,2020,94
+9, varun,2019,70
+10, rohit,2020,87
+SOURCE CODE:
+hive>create table cricket (id string, name string, year string, runs float) row format delimited
+fields terminated by ',' stored as textile;
+hive >load data local inpath '/home/user/cricket.txt' into table cricket;
+hive>SELECT year, max(runs) FROM cricket GROUP BY year;
+hive>SELECT a.year, a.id, a.runs from cricket a JOIN (SELECT year, max(runs) runs FROM
+cricket GROUP BY year) b ON (a.year= b. year AND a.runs = b.runs)
