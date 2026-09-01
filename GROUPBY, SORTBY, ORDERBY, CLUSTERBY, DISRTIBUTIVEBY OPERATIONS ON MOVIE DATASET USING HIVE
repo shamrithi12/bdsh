@@ -1,0 +1,39 @@
+hive>create table user_9(userid string,uname string,uemaild string,uphno string) row format
+delimited fields terminated by ','stored as textfile;
+hive>create table movie_9(mid string,mname string,category string) row format delimited
+fields
+terminated by ',' stored as textfile;
+hive>create table review_9(movieid string,userid string,rating string) row format delimited
+fields
+terminated by ',' stored as textfile;
+hive>LOAD DATA LOCAL INPATH'/home/user/user_11.txt' into table user_9;
+hive>LOAD DATA LOCAL INPATH'/home/user/review_11.txt' into table review_9;
+hive>LOAD DATA LOCAL INPATH'/home/user/movie_11.txt' into table movie_9;
+hive>select userid,movieid,rating from review_9 order by rating DESC;
+hive>select rating,count(*) from review_9 group by rating;
+hive>select mid,mname from movie_9 sort by mname;
+hive>select mid,mname,category from movie_9 cluster by category;
+hive>select mid,mname from movie_9 distribute by mid;
+
+INPUT FILE:
+user_9.txt
+101,ramya,ramya123@gmail.com,9043676963
+102,kani,kani97956@gmail.com,6578678789
+103,dhivya,rajdhivya3@gmai.com,8586576968
+105,karthi,karthikeyan@gmail.com,9783557680
+104,raj,manojraj@gmail.com,8677575501
+Movie_9.txt
+201,bigil,motivation
+202,jawan,action
+203,jailer,thriller
+204,karnan,emotion
+205,kgf,action
+
+57
+
+Review_9.txt
+m1,u1,5
+m2,u3,3
+m3,u4,3
+m4,u5,4.5
+m5,u6,3
