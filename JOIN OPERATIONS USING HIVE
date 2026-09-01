@@ -1,0 +1,35 @@
+>create table customer1(cus_id int,name string,acc_type string,addressstring,acc_bal
+float)row format delimited fields terminated by ',' stored as textfile;
+>create table transaction12(tr_id int,cus_id int,tr_type string,amt float,date date)row format
+delimited fields terminated by ',' stored as textfile;
+> load data local inpath '/home/grg/hive-2.3.5/customer1.txt' into table customer1;
+>load data local inpath '/home/grg/hive-2.3.5/transaction12.txt' into table transaction1;
+JOIN:
+hive> select A.name, A.acc_type, A.address, A.acc_bal, B.tr_id, B.tr_type, B.amt, B.date from
+customer1 A join transaction12 B on (A.cus_id = B.cus_id);
+RIGHT OUTER JOIN:
+hive> select A.name, A.acc_type, A.address, A.acc_bal, B.tr_id, B.tr_type, B.amt from customer1
+A right outer join transaction12 B on (A.cus_id = B.cus_id);
+FULL OUTER JOIN:
+hive> select A.name, A.acc_type, A.address, A.acc_bal, B.tr_id, B.tr_type, B.amt from customer1
+A full outer join transaction12 B on (A.cus_id = B.cus_id);
+LEFT OUTER JOIN:
+hive> select A.name, A.acc_type, A.address, A.acc_bal, B.tr_id, B.tr_type, B.amt from customer1
+A left outer join transaction12 B on (A.cus_id = B.cus_id);
+
+62
+
+INPUT FILE:
+Customer.txt
+
+1,Roshini,savings,Salem,50000.0
+2,Jayashree,current,Namakkal,67000.0
+3,Sainithi,current,Theni,45000.0
+4,Sindhu,savings,Trichy,76000.0
+5,Sandhya,savings,Coimbatore,53000.0
+Transaction.txt
+111,1,UPI,3000.0,2023-01-30
+222,2,Online,4000.0,2023-01-30
+333,3,UPI,8000.0,2023-03-17
+444,4,Netbanking,5400.0,2023-04-09
+555,5,Online,2000.0,2023-08-06
