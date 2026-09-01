@@ -1,0 +1,6 @@
+ val sc = spark.sparkContext 
+ val rdd = sc.textFile("D:\\Mumbai.txt") 
+ val rdd2 = rdd.flatMap(f=>f.split(" ")) 
+ val rdd3 = rdd2.map(m=>(m,1)) 
+ val rdd4 = rdd3.reduceByKey(_ + _) 
+ val rdd5=rdd4.map(a=>(a._2,a._1)).sortByKey() scala> rdd5.collect.foreach(println) 
