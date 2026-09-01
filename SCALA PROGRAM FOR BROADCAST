@@ -1,0 +1,17 @@
+scala> val states = Map(("NY","NewYork"),("CA","California"),("FL","Florida"))
+scala>val countries = Map(("USA","UNITED STATES OF AMERICA"),("IN","INDIA"))
+scala> val broadcastStates = spark.sparkContext.broadcast(states)
+scala> val broadcastCountries =spark.sparkContext.broadcast(countries)
+val data = Seq(("JAMES","SMITH","USA","CA"), ("MICHAEL","ROSE","USA","NY"),
+("ROBERT","WILLIAMS","USA","CA"), ("MARIA","JONES","USA","FL"))
+scala> val columns =Seq("firstname","lastname","country","state")
+scala> import spark.sqlContext.implicits._
+scala> val df = data.toDF(columns:_*)
+scala> val df2 =df.map(row=>{
+val country = row.getString(2)
+val state = row.getString(3)
+val fullCountry = broadcastCountries.value.get(country).get
+val fullState =broadcastStates.value.get(state).get
+(row.getString(0),row.getString(1),fullCountry,fullState)})
+scala> .toDF(columns:_*)
+scala> df2.show(false)
