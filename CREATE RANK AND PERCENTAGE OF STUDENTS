@@ -1,0 +1,11 @@
+scala> import org.apache.spark.sql.expressions.Window
+scala> import org.apache.spark.sql.functions.rank
+scala> import org.apache.spark.sql.functions._
+scala> val studData=Seq((20001,"Akshara",462,"CS"), (20002,"Parthi",467,"BIO"),
+(20003,"kanmani",450,"CHE"), (20004,"Jithish",432,"CS"), (20005,"Varnika",498,"CS"))
+scala> val df=studData.toDF("Stu_ID","Stu_Name","Mark","Dept")
+scala> df.show()
+scala> val windowSpec=Window.partitionBy("Dept").orderBy("Stu_ID")
+scala> df.withColumn("row_number",row_number.over(windowSpec)).show()
+scala> df.withColumn("rank",rank().over(windowSpec)).show()
+scala> df.withColumn("percent_rank",percent_rank().over(windowSpec)).show()
